@@ -5,6 +5,5 @@ object NetworkApiConfig{
      val apiKey = "b6e5b542e740deb66450252172dcfa97"
      val language = "en-US"
      val page = "undefined"
-     val sort_by = "popular"
 
 }

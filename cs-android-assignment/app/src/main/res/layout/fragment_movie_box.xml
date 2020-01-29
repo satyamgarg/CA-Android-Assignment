@@ -7,12 +7,13 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="192dp">
+        android:layout_height="260dp">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="?attr/colorPrimary"
+            android:background="@color/colorBackgroundBlack"
+            app:contentScrim="@color/colorBackgroundBlack"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/toolbar">
 
@@ -20,14 +21,55 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@drawable/ic_moviebox_logo">
+                android:layout_height="match_parent"
+                android:contentInsetStart="0dp"
+                android:contentInsetLeft="0dp"
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp">
 
-                <androidx.viewpager.widget.ViewPager
-                    android:id="@+id/viewPager"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingTop="25dp"
+                        android:paddingBottom="25dp"
+                        android:src="@drawable/ic_moviebox_logo" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorBackgroundGray"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:text="@string/TEXT_PLAYING_NOW"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:textColor="@color/colorRatingYellow" />
+                    </LinearLayout>
+
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/viewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+
+                <!--<androidx.leanback.widget.HorizontalGridView
+                    android:id="@+id/girdView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:columnWidth="300dp"
+                    android:numColumns="3"
+                    android:scrollbars="horizontal" />-->
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -45,16 +87,16 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/colorBackgroundGray">
+                android:background="@color/colorBackgroundGray"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:text="@string/textMostPopular"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
+                    android:text="@string/TEXT_MOST_POPULAR"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/colorRatingYellow" />
             </LinearLayout>
