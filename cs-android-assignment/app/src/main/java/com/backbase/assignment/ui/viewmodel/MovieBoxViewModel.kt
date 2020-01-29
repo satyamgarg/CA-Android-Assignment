@@ -1,12 +1,9 @@
 package com.backbase.assignment.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.backbase.assignment.data.MovieBoxRepository
+import com.backbase.assignment.data.MovieRepository
 
-class MovieBoxViewModel(private val repository: MovieBoxRepository) : ViewModel() {
-
+class MovieBoxViewModel(private val repository: MovieRepository) : ViewModel() {
     fun getMovies() = repository.getMovies()
     fun getPopularMovies() = repository.getPopularMovies()
-    fun getMovieDetails(movieId:String) = repository.getMovieDetails(movieId)
-
 }

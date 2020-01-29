@@ -7,7 +7,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="260dp">
+        android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
@@ -57,9 +57,9 @@
                             android:textColor="@color/colorRatingYellow" />
                     </LinearLayout>
 
-                    <androidx.viewpager.widget.ViewPager
-                        android:id="@+id/viewPager"
-                        android:layout_width="match_parent"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvPlayingNow"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
                 </LinearLayout>
 

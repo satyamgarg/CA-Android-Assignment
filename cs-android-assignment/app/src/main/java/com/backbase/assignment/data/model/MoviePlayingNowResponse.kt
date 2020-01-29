@@ -4,7 +4,7 @@ import com.backbase.assignment.model.Movie
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class MovieResponse {
+class MoviePlayingNowResponse {
     @SerializedName("results")
     @Expose
     var results: List<Movie>? = null

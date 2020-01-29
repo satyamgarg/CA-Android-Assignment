@@ -1,29 +1,24 @@
 package com.backbase.assignment.ui.adapter
 
 
-import androidx.viewpager.widget.PagerAdapter
-import com.backbase.assignment.model.Movie
-
 import android.content.Context
 import android.os.Parcelable
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.viewpager.widget.PagerAdapter
 import com.backbase.assignment.R
+import com.backbase.assignment.model.Movie
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.DrawableImageViewTarget
-import java.util.ArrayList
+import java.util.*
 
-class MoviesPagerAdapter(private val context: Context, private val movies: ArrayList<Movie>) : PagerAdapter() {
-    private val inflater: LayoutInflater
-
-    init {
-        inflater = LayoutInflater.from(context)
-    }
+class MoviesPagerAdapter(private val context: Context, private val movies: ArrayList<Movie>) :
+    PagerAdapter() {
+    private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         container.removeView(`object` as View)

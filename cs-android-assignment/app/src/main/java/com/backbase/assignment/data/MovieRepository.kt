@@ -3,17 +3,17 @@ package com.backbase.assignment.data
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.backbase.assignment.data.model.MovieDetailResponse
-import com.backbase.assignment.data.model.MovieResponse
+import com.backbase.assignment.data.model.MoviePlayingNowResponse
 import com.backbase.assignment.data.model.PopularMovieResponse
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MovieBoxRepository {
+class MovieRepository {
 
-    private var movieResponse = MovieResponse()
-    private val movieResponseLiveData = MutableLiveData<MovieResponse>()
+    private var movieResponse = MoviePlayingNowResponse()
+    private val movieResponseLiveData = MutableLiveData<MoviePlayingNowResponse>()
 
     private var popularMovieResponse = PopularMovieResponse()
     private val popularMovieResponseLiveData = MutableLiveData<PopularMovieResponse>()
@@ -24,34 +24,34 @@ class MovieBoxRepository {
 
     companion object {
         @Volatile
-        private var instance: MovieBoxRepository? = null
+        private var instance: MovieRepository? = null
 
         fun getInstance() =
             instance ?: synchronized(this) {
                 instance
-                    ?: MovieBoxRepository().also { instance = it }
+                    ?: MovieRepository().also { instance = it }
             }
     }
 
-    fun getMovies(): MutableLiveData<MovieResponse> {
+    fun getMovies(): MutableLiveData<MoviePlayingNowResponse> {
         val request = MoviesNetworkApi.create().getMovies(
             NetworkApiConfig.language,
             NetworkApiConfig.page, NetworkApiConfig.apiKey
         )
 
-        request.enqueue(object : Callback<MovieResponse> {
-            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
+        request.enqueue(object : Callback<MoviePlayingNowResponse> {
+            override fun onResponse(call: Call<MoviePlayingNowResponse>, response: Response<MoviePlayingNowResponse>) {
                 if (response.code() == 200) {
                     Log.d(
                         "MovieBoxRepository",
                         "Success Response:-${Gson().toJson(response.body())}"
                     )
-                    movieResponse = response.body() ?: MovieResponse()
+                    movieResponse = response.body() ?: MoviePlayingNowResponse()
                     movieResponseLiveData.value = movieResponse
                 }
             }
 
-            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
+            override fun onFailure(call: Call<MoviePlayingNowResponse>, t: Throwable) {
                 Log.d("MovieBoxRepository", "Failure Response:-${t.printStackTrace()}")
             }
         })
@@ -70,7 +70,6 @@ class MovieBoxRepository {
                 response: Response<PopularMovieResponse>
             ) {
                 if (response.code() == 200) {
-                    val res = Gson().toJson(response.body())
                     Log.d(
                         "MovieBoxRepository",
                         "Popular movie Success Response:-${Gson().toJson(response.body())}"
@@ -99,7 +98,6 @@ class MovieBoxRepository {
                 response: Response<MovieDetailResponse>
             ) {
                 if (response.code() == 200) {
-                    val res = Gson().toJson(response.body())
                     Log.d(
                         "MovieBoxRepository",
                         "Success Response:-${Gson().toJson(response.body())}"

@@ -1,12 +1,18 @@
-package com.company.mvvm.utilities
+package com.backbase.assignment.utilities
 
-import com.backbase.assignment.data.MovieBoxRepository
-import com.backbase.assignment.ui.viewmodel.MovieBoxViewModelFactory
+import com.backbase.assignment.data.MovieRepository
+import com.backbase.assignment.ui.viewmodel.MovieDetailsViewModelFactory
+import com.backbase.assignment.ui.viewmodel.MovieViewModelFactory
 
 object RepositoryUtils {
 
-    fun provideBooksViewModelFactory(): MovieBoxViewModelFactory{
-        val bookRepository = MovieBoxRepository.getInstance()
-        return MovieBoxViewModelFactory(bookRepository)
+    fun provideMovieBoxViewModelFactory(): MovieViewModelFactory {
+        val movieRepository = MovieRepository.getInstance()
+        return MovieViewModelFactory(movieRepository)
+    }
+
+    fun provideMovieDetailsViewModelFactory(): MovieDetailsViewModelFactory {
+        val movieRepository = MovieRepository.getInstance()
+        return MovieDetailsViewModelFactory(movieRepository)
     }
 }

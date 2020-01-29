@@ -1,7 +1,5 @@
 package com.backbase.assignment.ui.adapter
 
-import android.content.Context
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +8,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.backbase.assignment.R
+import com.backbase.assignment.data.NetworkApiConfig
 import com.backbase.assignment.model.Movie
 import com.backbase.assignment.ui.custom.RatingView
 import com.backbase.assignment.ui.utils.DateUtils
@@ -21,11 +20,9 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.DrawableImageViewTarget
 
 
-class MoviesAdapter(var items: List<Movie> = ArrayList()) :
-    RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
+class MovieMostPopularAdapter(var items: List<Movie> = ArrayList()) :
+    RecyclerView.Adapter<MovieMostPopularAdapter.ViewHolder>() {
     private var listener: OnItemClickListener? = null
-
-    constructor(context: Context?) : this()
 
     constructor(listener: OnItemClickListener?) : this() {
         this.listener = listener
@@ -42,23 +39,22 @@ class MoviesAdapter(var items: List<Movie> = ArrayList()) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
-        holder.bind(items.get(position))
+        holder.bind(items[position])
 
     override fun getItemCount() = items.size
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        lateinit var poster: ImageView
-        lateinit var title: TextView
-        lateinit var releaseDate: TextView
-        lateinit var rating: RatingView
+        private lateinit var poster: ImageView
+        private lateinit var title: TextView
+        private lateinit var releaseDate: TextView
+        private lateinit var rating: RatingView
 
         fun bind(item: Movie) = with(itemView) {
             poster = itemView.findViewById(R.id.poster)
-            poster.setImageURI(Uri.parse("https://image.tmdb.org/t/p/original/${item.posterPath}"))
 
             // Load the image into image view
             Glide.with(context)
-                .load("https://image.tmdb.org/t/p/original/${item.posterPath}")
+                .load("${NetworkApiConfig.imageUrl}${item.posterPath}")
                 .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
                 .into(DrawableImageViewTarget(poster))
 
@@ -88,14 +84,13 @@ class MoviesAdapter(var items: List<Movie> = ArrayList()) :
                     context.getDrawable(R.drawable.progressbar_red)
             }
 
-
-            itemView.setOnClickListener {
-                listener?.onItemClick(item)
+            itemView.setOnClickListener { view ->
+                listener?.onItemClick(view, item)
             }
         }
     }
 
     interface OnItemClickListener {
-        fun onItemClick(item: Movie?)
+        fun onItemClick(view: View?, item: Movie?)
     }
 }

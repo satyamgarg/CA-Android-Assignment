@@ -3,4 +3,8 @@
     <string name="TEXT_MOST_POPULAR">Most popular</string>
     <string name="TEXT_PLAYING_NOW">Playing now</string>
     <string name="TEXT_OVERVIEW">Overview</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="TEXT_POSTER">Poster Image</string>
 </resources>

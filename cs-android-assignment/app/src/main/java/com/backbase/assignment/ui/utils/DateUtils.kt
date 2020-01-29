@@ -1,5 +1,6 @@
 package com.backbase.assignment.ui.utils
 
+import android.annotation.SuppressLint
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -16,6 +17,7 @@ object DateUtils {
      * @param outputDateFormat - output date format
      * @return formatted date string
      */
+    @SuppressLint("SimpleDateFormat")
     fun formattedDate(
         inputDate: String?,
         inputDateFormat: String?,
