@@ -8,7 +8,7 @@ import java.util.*
 object DateUtils {
 
     const val RELEASE_DATE_FORMAT = "MMMM d, yyyy"
-    const val API_DATE_FORMAT = "YY-MM-DD"
+    const val API_DATE_FORMAT = "YYYY-MM-DD"
 
     /**
      * Format String Date to String date different format

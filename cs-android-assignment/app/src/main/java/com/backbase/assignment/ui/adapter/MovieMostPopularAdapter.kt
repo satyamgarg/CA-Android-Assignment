@@ -63,8 +63,12 @@ class MovieMostPopularAdapter() :
             title.text = item.title
 
             releaseDate = itemView.findViewById(R.id.tvReleaseDate)
-            releaseDate.text =
-                DateUtils.formattedDate(item.releaseDate, API_DATE_FORMAT, RELEASE_DATE_FORMAT)
+
+            item.releaseDate?.let {
+                releaseDate.text =
+                    DateUtils.formattedDate(item.releaseDate, API_DATE_FORMAT, RELEASE_DATE_FORMAT)
+            }
+
 
             rating = itemView.findViewById(R.id.rating)
 

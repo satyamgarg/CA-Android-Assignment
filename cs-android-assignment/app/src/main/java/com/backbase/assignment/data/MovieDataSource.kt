@@ -1,6 +1,5 @@
 package com.backbase.assignment.data
 
-import android.app.Application
 import androidx.paging.PageKeyedDataSource
 import com.backbase.assignment.data.ApiClient.getService
 import com.backbase.assignment.data.NetworkApiConfig.apiKey
@@ -11,8 +10,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
-class MovieDataSource() :
-    PageKeyedDataSource<Long?, Movie?>() {
+class MovieDataSource() : PageKeyedDataSource<Long?, Movie?>() {
 
     private var popularMovieResponse = PopularMovieResponse()
 
@@ -27,8 +25,7 @@ class MovieDataSource() :
                 call: Call<PopularMovieResponse?>,
                 response: Response<PopularMovieResponse?>
             ) {
-                var moviesList: List<Movie> =
-                    ArrayList<Movie>()
+                var moviesList: List<Movie> = ArrayList()
                 if (response.code() == 200) {
                     popularMovieResponse = response.body() ?: popularMovieResponse
                     moviesList = popularMovieResponse.results ?: moviesList

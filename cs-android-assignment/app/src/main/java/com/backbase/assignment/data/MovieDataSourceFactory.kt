@@ -6,9 +6,7 @@ import androidx.paging.DataSource
 
 import com.backbase.assignment.model.Movie
 
-class MovieDataSourceFactory(
-    private val movieDataService: MoviesDataService
-) : DataSource.Factory<Long, Movie?>() {
+class MovieDataSourceFactory() : DataSource.Factory<Long, Movie?>() {
     private val mutableLiveData: MutableLiveData<MovieDataSource> = MutableLiveData()
 
     /**
@@ -20,10 +18,4 @@ class MovieDataSourceFactory(
         return movieDataSource
     }
 
-    /**
-     * Get movie data source for popular movies
-     */
-    fun getMutableLiveData(): MutableLiveData<MovieDataSource> {
-        return mutableLiveData
-    }
 }

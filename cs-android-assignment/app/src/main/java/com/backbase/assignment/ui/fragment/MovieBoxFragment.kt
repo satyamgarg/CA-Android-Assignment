@@ -4,7 +4,9 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -30,6 +32,8 @@ class MovieBoxFragment : Fragment() {
     private lateinit var viewModel: MovieBoxViewModel
     private lateinit var rvPlayingNow: RecyclerView
     private lateinit var moviePlayingNowAdapter: MoviePlayingNowAdapter
+    private lateinit var progressBarPlayingNow: ProgressBar
+    private lateinit var progressBarMostPopular: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,8 +48,10 @@ class MovieBoxFragment : Fragment() {
         moviePlayingNowAdapter = MoviePlayingNowAdapter(ArrayList())
         rvPlayingNow.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-
         rvPlayingNow.adapter = moviePlayingNowAdapter
+
+        progressBarPlayingNow = view.findViewById(R.id.progressBarPlayingNow)
+        progressBarMostPopular = view.findViewById(R.id.progressBarMostPopular)
 
         return view
     }
@@ -65,11 +71,13 @@ class MovieBoxFragment : Fragment() {
      */
     private fun setObservers() {
         viewModel.getPlayingNowMovies().observe(viewLifecycleOwner, Observer { movies ->
+            progressBarPlayingNow.visibility = GONE
             moviePlayingNowAdapter.items = movies.results ?: ArrayList()
             moviePlayingNowAdapter.notifyDataSetChanged()
         })
 
         viewModel.getPopularMovies().observe(viewLifecycleOwner, Observer { movies ->
+            progressBarMostPopular.visibility = GONE
             setPopularMoviesData(movies)
         })
     }

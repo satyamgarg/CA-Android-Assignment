@@ -18,16 +18,14 @@ class MovieBoxViewModel(private val repository: MovieRepository) : ViewModel() {
     var moviesPageList: LiveData<PagedList<Movie>>
 
     init {
-        val movieDataService = ApiClient.getService()
-        val movieDataSourceFactory = MovieDataSourceFactory(movieDataService)
-        var movieDataSourceLiveData = movieDataSourceFactory.getMutableLiveData()
+        val movieDataSourceFactory = MovieDataSourceFactory()
         val config: PagedList.Config = PagedList.Config.Builder()
-            .setEnablePlaceholders(true)
+            .setEnablePlaceholders(false)
             .setInitialLoadSizeHint(10)
             .setPageSize(15)
-            .setPrefetchDistance(4)
+            .setPrefetchDistance(2)
             .build()
-        executor = Executors.newFixedThreadPool(5)
+        executor = Executors.newFixedThreadPool(3)
         moviesPageList = LivePagedListBuilder<Long, Movie>(movieDataSourceFactory, config)
             .setFetchExecutor(executor)
             .build()
