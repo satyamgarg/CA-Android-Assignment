@@ -5,13 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import com.backbase.assignment.data.model.MovieDetailResponse
 import com.backbase.assignment.data.model.MoviePlayingNowResponse
 import com.backbase.assignment.data.model.PopularMovieResponse
-import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class MovieRepository {
-
+    private val TAG = MovieRepository::class.java.simpleName
     private var movieResponse = MoviePlayingNowResponse()
     private val movieResponseLiveData = MutableLiveData<MoviePlayingNowResponse>()
 
@@ -34,25 +33,24 @@ class MovieRepository {
     }
 
     fun getMovies(): MutableLiveData<MoviePlayingNowResponse> {
-        val request = MoviesNetworkApi.create().getMovies(
+        val request = ApiClient.getService(MoviesNetworkApi::class.java).getMovies(
             NetworkApiConfig.language,
             NetworkApiConfig.page, NetworkApiConfig.apiKey
         )
 
         request.enqueue(object : Callback<MoviePlayingNowResponse> {
-            override fun onResponse(call: Call<MoviePlayingNowResponse>, response: Response<MoviePlayingNowResponse>) {
+            override fun onResponse(
+                call: Call<MoviePlayingNowResponse>,
+                response: Response<MoviePlayingNowResponse>
+            ) {
                 if (response.code() == 200) {
-                    Log.d(
-                        "MovieBoxRepository",
-                        "Success Response:-${Gson().toJson(response.body())}"
-                    )
                     movieResponse = response.body() ?: MoviePlayingNowResponse()
                     movieResponseLiveData.value = movieResponse
                 }
             }
 
             override fun onFailure(call: Call<MoviePlayingNowResponse>, t: Throwable) {
-                Log.d("MovieBoxRepository", "Failure Response:-${t.printStackTrace()}")
+                Log.d(TAG, "${t.printStackTrace()}")
             }
         })
 
@@ -60,7 +58,7 @@ class MovieRepository {
     }
 
     fun getPopularMovies(): MutableLiveData<PopularMovieResponse> {
-        val request = MoviesNetworkApi.create().getPopularMovies(
+        val request = ApiClient.getService(MoviesNetworkApi::class.java).getPopularMovies(
             NetworkApiConfig.apiKey
         )
 
@@ -70,17 +68,13 @@ class MovieRepository {
                 response: Response<PopularMovieResponse>
             ) {
                 if (response.code() == 200) {
-                    Log.d(
-                        "MovieBoxRepository",
-                        "Popular movie Success Response:-${Gson().toJson(response.body())}"
-                    )
                     popularMovieResponse = response.body() ?: PopularMovieResponse()
                     popularMovieResponseLiveData.value = popularMovieResponse
                 }
             }
 
             override fun onFailure(call: Call<PopularMovieResponse>, t: Throwable) {
-                Log.d("MovieBoxRepository", "Failure Response:-${t.printStackTrace()}")
+                Log.d(TAG, "${t.printStackTrace()}")
             }
         })
 
@@ -88,7 +82,7 @@ class MovieRepository {
     }
 
     fun getMovieDetails(movieId: String): MutableLiveData<MovieDetailResponse> {
-        val request = MoviesNetworkApi.create().getMovieDetails(
+        val request = ApiClient.getService(MoviesNetworkApi::class.java).getMovieDetails(
             movieId, NetworkApiConfig.apiKey
         )
 
@@ -98,17 +92,13 @@ class MovieRepository {
                 response: Response<MovieDetailResponse>
             ) {
                 if (response.code() == 200) {
-                    Log.d(
-                        "MovieBoxRepository",
-                        "Success Response:-${Gson().toJson(response.body())}"
-                    )
                     movieDetailResponse = response.body() ?: MovieDetailResponse()
                     movieDetailResponseLiveData.value = movieDetailResponse
                 }
             }
 
             override fun onFailure(call: Call<MovieDetailResponse>, t: Throwable) {
-                Log.d("MovieBoxRepository", "Failure Response:-${t.printStackTrace()}")
+                Log.d(TAG, "${t.printStackTrace()}")
             }
         })
 

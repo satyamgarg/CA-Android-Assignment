@@ -29,7 +29,7 @@ class MoviesPagerAdapter(private val context: Context, private val movies: Array
     }
 
     override fun instantiateItem(view: ViewGroup, position: Int): Any {
-        val imageLayout = inflater.inflate(R.layout.view_palying_movies, view, false)!!
+        val imageLayout = inflater.inflate(R.layout.row_palying_movies, view, false)!!
 
         val imageView = imageLayout
             .findViewById(R.id.image) as ImageView

@@ -20,7 +20,7 @@ class MoviePlayingNowAdapter(var items: List<Movie> = ArrayList()) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.view_palying_movies,
+                R.layout.row_palying_movies,
                 parent,
                 false
             )

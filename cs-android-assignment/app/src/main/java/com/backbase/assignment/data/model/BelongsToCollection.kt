@@ -3,7 +3,7 @@ package com.backbase.assignment.data.model
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class Belongs_to_collection {
+class BelongsToCollection {
     @SerializedName("id")
     @Expose
     private val id :Int ?= null

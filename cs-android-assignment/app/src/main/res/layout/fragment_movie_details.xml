@@ -18,7 +18,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        android:contentDescription="@string/DESC_POSTER" />
 
     <TextView
         android:id="@+id/tvMovieName"
@@ -59,23 +60,23 @@
         android:id="@+id/tvOverview"
         style="@style/StyleTextSmall"
         android:layout_width="0dp"
-        android:layout_height="32dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tvOverviewHeading"
         app:layout_constraintTop_toBottomOf="@+id/tvOverviewHeading"
-        tools:text="The Fargo Kid,overview The Fargo Kid is mistaken for a killer and is hired to kill another man.." />
+        tools:text="The Fargo Kid,overview The Fargo\n Kid is mistaken for a killer and is hired to kill\n another man.." />
 
-    <LinearLayout
-        android:id="@+id/llContainer"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvGenres"
         android:layout_width="0dp"
-        android:layout_height="563dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="@+id/tvOverview"
         app:layout_constraintStart_toStartOf="@+id/tvOverview"
-        app:layout_constraintTop_toBottomOf="@+id/tvOverview"></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/tvOverview" />
 
     <ProgressBar
         android:id="@+id/progressBar"

@@ -21,17 +21,4 @@ interface MoviesNetworkApi {
     @GET("movie/{movie_id}?")
     fun getMovieDetails(@Path("movie_id") movie_id: String, @Query("api_key") api_key: String): Call<MovieDetailResponse>
 
-
-    companion object {
-
-        fun create(): MoviesNetworkApi {
-            val retrofit = Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(NetworkApiConfig.baseUrl)
-                .build()
-            return retrofit.create(MoviesNetworkApi::class.java)
-        }
-    }
-
-
 }

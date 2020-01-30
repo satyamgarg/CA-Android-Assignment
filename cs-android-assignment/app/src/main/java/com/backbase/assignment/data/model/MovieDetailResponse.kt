@@ -12,7 +12,7 @@ class MovieDetailResponse {
     var backdrop_path: String? = null
     @SerializedName("belongs_to_collection")
     @Expose
-    var belongs_to_collection: Belongs_to_collection? = null
+    var belongs_to_collection: BelongsToCollection? = null
     @SerializedName("budget")
     @Expose
     var budget: Long? = null

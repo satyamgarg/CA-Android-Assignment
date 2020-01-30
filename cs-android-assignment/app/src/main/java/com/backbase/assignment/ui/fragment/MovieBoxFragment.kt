@@ -25,8 +25,6 @@ import com.backbase.assignment.utilities.RepositoryUtils
 
 class MovieBoxFragment : Fragment() {
 
-    private val TAG = MovieBoxFragment::class.java.simpleName
-
     private lateinit var moviesAdapter: MovieMostPopularAdapter
     private lateinit var viewModel: MovieBoxViewModel
 
@@ -63,14 +61,14 @@ class MovieBoxFragment : Fragment() {
         rvPlayingNow.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
-        val dividerPlayingNowItemDecoration: ItemDecoration =
+        /*val dividerPlayingNowItemDecoration: ItemDecoration =
             DividerItemDecorator(
                 ContextCompat.getDrawable(
                     context!!,
                     R.drawable.playing_nowdivider
                 )!!
             )
-        recyclerView.addItemDecoration(dividerPlayingNowItemDecoration)
+        recyclerView.addItemDecoration(dividerPlayingNowItemDecoration)*/
         rvPlayingNow.adapter = moviePlayingNowAdapter
 
         return view
@@ -83,13 +81,11 @@ class MovieBoxFragment : Fragment() {
         viewModel = ViewModelProvider(this, factory).get(MovieBoxViewModel::class.java)
 
         viewModel.getMovies().observe(viewLifecycleOwner, Observer { movies ->
-            Log.d(TAG, "Movies List--:> ${movies.results?.size}")
             moviePlayingNowAdapter.items = movies.results ?: ArrayList()
             moviePlayingNowAdapter.notifyDataSetChanged()
         })
 
         viewModel.getPopularMovies().observe(viewLifecycleOwner, Observer { movies ->
-            Log.d(TAG, "Movies List--:> ${movies.results?.size}")
             moviesAdapter.items = movies.results ?: ArrayList()
             moviesAdapter.notifyDataSetChanged()
         })

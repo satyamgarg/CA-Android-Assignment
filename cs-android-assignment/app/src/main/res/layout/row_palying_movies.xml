@@ -11,5 +11,5 @@
         android:layout_gravity="center"
         android:src="@mipmap/ic_launcher"
         android:scaleType="fitXY"
-        android:contentDescription="@string/TEXT_POSTER" />
+        android:contentDescription="@string/DESC_POSTER" />
 </LinearLayout>

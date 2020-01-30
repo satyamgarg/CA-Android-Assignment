@@ -13,6 +13,8 @@
     <color name="colorRatingYellowFade">#33E1E61A</color>
     <color name="colorRatingRedFade">#33E6301A</color>
     <color name="colorText">#CDCDCD</color>
+    <color name="colorGenesBackground">#FDFDFD</color>
+    <color name="colorGenesText">#878787</color>
 
 
 
