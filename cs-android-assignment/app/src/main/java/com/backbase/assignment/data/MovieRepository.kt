@@ -10,12 +10,10 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MovieRepository {
+
     private val TAG = MovieRepository::class.java.simpleName
     private var movieResponse = MoviePlayingNowResponse()
     private val movieResponseLiveData = MutableLiveData<MoviePlayingNowResponse>()
-
-    private var popularMovieResponse = PopularMovieResponse()
-    private val popularMovieResponseLiveData = MutableLiveData<PopularMovieResponse>()
 
     private var movieDetailResponse = MovieDetailResponse()
     private val movieDetailResponseLiveData = MutableLiveData<MovieDetailResponse>()
@@ -32,8 +30,12 @@ class MovieRepository {
             }
     }
 
-    fun getMovies(): MutableLiveData<MoviePlayingNowResponse> {
-        val request = ApiClient.getService(MoviesNetworkApi::class.java).getMovies(
+    /**
+     * Get playing movies
+     * @return MutableLiveData<MoviePlayingNowResponse>
+     */
+    fun getPlayingNowMovies(): MutableLiveData<MoviePlayingNowResponse> {
+        val request = ApiClient.getService().getMovies(
             NetworkApiConfig.language,
             NetworkApiConfig.page, NetworkApiConfig.apiKey
         )
@@ -44,7 +46,7 @@ class MovieRepository {
                 response: Response<MoviePlayingNowResponse>
             ) {
                 if (response.code() == 200) {
-                    movieResponse = response.body() ?: MoviePlayingNowResponse()
+                    movieResponse = response.body() ?: movieResponse
                     movieResponseLiveData.value = movieResponse
                 }
             }
@@ -57,32 +59,14 @@ class MovieRepository {
         return movieResponseLiveData
     }
 
-    fun getPopularMovies(): MutableLiveData<PopularMovieResponse> {
-        val request = ApiClient.getService(MoviesNetworkApi::class.java).getPopularMovies(
-            NetworkApiConfig.apiKey
-        )
 
-        request.enqueue(object : Callback<PopularMovieResponse> {
-            override fun onResponse(
-                call: Call<PopularMovieResponse>,
-                response: Response<PopularMovieResponse>
-            ) {
-                if (response.code() == 200) {
-                    popularMovieResponse = response.body() ?: PopularMovieResponse()
-                    popularMovieResponseLiveData.value = popularMovieResponse
-                }
-            }
-
-            override fun onFailure(call: Call<PopularMovieResponse>, t: Throwable) {
-                Log.d(TAG, "${t.printStackTrace()}")
-            }
-        })
-
-        return popularMovieResponseLiveData
-    }
-
+    /**
+     * Get movie details
+     * @param movieId - Movie ID
+     * @return MutableLiveData<MovieDetailResponse>
+     */
     fun getMovieDetails(movieId: String): MutableLiveData<MovieDetailResponse> {
-        val request = ApiClient.getService(MoviesNetworkApi::class.java).getMovieDetails(
+        val request = ApiClient.getService().getMovieDetails(
             movieId, NetworkApiConfig.apiKey
         )
 
@@ -92,7 +76,7 @@ class MovieRepository {
                 response: Response<MovieDetailResponse>
             ) {
                 if (response.code() == 200) {
-                    movieDetailResponse = response.body() ?: MovieDetailResponse()
+                    movieDetailResponse = response.body() ?: movieDetailResponse
                     movieDetailResponseLiveData.value = movieDetailResponse
                 }
             }

@@ -36,5 +36,4 @@ class MovieGenresAdapter(var items: List<Genres> = ArrayList()) :
         }
     }
 
-
 }

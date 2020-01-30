@@ -2,7 +2,6 @@ package com.backbase.assignment.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
@@ -25,9 +25,9 @@ import com.backbase.assignment.utilities.RepositoryUtils
 
 class MovieBoxFragment : Fragment() {
 
+    private var recyclerViewMostPopulat: RecyclerView? = null
     private lateinit var moviesAdapter: MovieMostPopularAdapter
     private lateinit var viewModel: MovieBoxViewModel
-
     private lateinit var rvPlayingNow: RecyclerView
     private lateinit var moviePlayingNowAdapter: MoviePlayingNowAdapter
 
@@ -39,36 +39,12 @@ class MovieBoxFragment : Fragment() {
         val view: View = inflater.inflate(R.layout.fragment_movie_box, container, false)
         val activity = activity as Context
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
-
-        recyclerView.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        val dividerItemDecoration: ItemDecoration =
-            DividerItemDecorator(ContextCompat.getDrawable(context!!, R.drawable.divider)!!)
-        recyclerView.addItemDecoration(dividerItemDecoration)
-        moviesAdapter =
-            MovieMostPopularAdapter(object : MovieMostPopularAdapter.OnItemClickListener {
-                override fun onItemClick(view: View?, item: Movie?) {
-                    val action =
-                        MovieBoxFragmentDirections.actionMovieBoxToMovieDetails(item?.id.toString())
-                    Navigation.findNavController(view!!).navigate(action)
-                }
-            })
-        recyclerView.adapter = moviesAdapter
-
+        recyclerViewMostPopulat = view.findViewById(R.id.recyclerViewPopular)
         rvPlayingNow = view.findViewById(R.id.rvPlayingNow)
         moviePlayingNowAdapter = MoviePlayingNowAdapter(ArrayList())
         rvPlayingNow.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
 
-        /*val dividerPlayingNowItemDecoration: ItemDecoration =
-            DividerItemDecorator(
-                ContextCompat.getDrawable(
-                    context!!,
-                    R.drawable.playing_nowdivider
-                )!!
-            )
-        recyclerView.addItemDecoration(dividerPlayingNowItemDecoration)*/
         rvPlayingNow.adapter = moviePlayingNowAdapter
 
         return view
@@ -80,15 +56,48 @@ class MovieBoxFragment : Fragment() {
         val factory = RepositoryUtils.provideMovieBoxViewModelFactory()
         viewModel = ViewModelProvider(this, factory).get(MovieBoxViewModel::class.java)
 
-        viewModel.getMovies().observe(viewLifecycleOwner, Observer { movies ->
+        setObservers()
+
+    }
+
+    /**
+     * Set observers
+     */
+    private fun setObservers() {
+        viewModel.getPlayingNowMovies().observe(viewLifecycleOwner, Observer { movies ->
             moviePlayingNowAdapter.items = movies.results ?: ArrayList()
             moviePlayingNowAdapter.notifyDataSetChanged()
         })
 
         viewModel.getPopularMovies().observe(viewLifecycleOwner, Observer { movies ->
-            moviesAdapter.items = movies.results ?: ArrayList()
-            moviesAdapter.notifyDataSetChanged()
+            setPopularMoviesData(movies)
         })
+    }
+
+    /**
+     * Setting received popular movies list
+     */
+    private fun setPopularMoviesData(movies: PagedList<Movie>) {
+
+        moviesAdapter =
+            MovieMostPopularAdapter(object : MovieMostPopularAdapter.OnItemClickListener {
+                override fun onItemClick(view: View?, item: Movie?) {
+                    val action =
+                        MovieBoxFragmentDirections.actionMovieBoxToMovieDetails(item?.id.toString())
+                    Navigation.findNavController(view!!).navigate(action)
+                }
+            })
+
+        moviesAdapter.submitList(movies)
+
+        recyclerViewMostPopulat?.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        val dividerItemDecoration: ItemDecoration =
+            DividerItemDecorator(ContextCompat.getDrawable(context!!, R.drawable.divider)!!)
+        recyclerViewMostPopulat?.addItemDecoration(dividerItemDecoration)
+
+        recyclerViewMostPopulat?.adapter = moviesAdapter
+
     }
 
 }

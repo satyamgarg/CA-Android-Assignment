@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -23,22 +24,23 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:text="100"
         android:textColor="@color/colorText"
         android:textStyle="bold"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
 
     <TextView
+        style="@style/StyleTextMedium"
         android:id="@+id/percentageIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="8sp"
-        android:text="%"
+        android:textSize="@dimen/font_size_text_extra_small"
+        android:text="@string/TEXT_PERCENTAGE"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:textColor="@color/colorText"
         android:layout_marginEnd="9dp"
         android:layout_marginTop="12dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        tools:ignore="RelativeOverlap" />
 
 </RelativeLayout>

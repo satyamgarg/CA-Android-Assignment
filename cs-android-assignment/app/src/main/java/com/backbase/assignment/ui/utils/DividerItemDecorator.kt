@@ -6,6 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 
 class DividerItemDecorator(private val mDivider: Drawable) : ItemDecoration() {
+
+    /**
+     * Drawing divider
+     */
     override fun onDraw(
         canvas: Canvas,
         parent: RecyclerView,

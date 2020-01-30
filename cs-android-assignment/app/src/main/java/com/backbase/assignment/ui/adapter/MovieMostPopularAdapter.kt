@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.backbase.assignment.R
 import com.backbase.assignment.data.NetworkApiConfig
@@ -20,8 +21,9 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.DrawableImageViewTarget
 
 
-class MovieMostPopularAdapter(var items: List<Movie> = ArrayList()) :
-    RecyclerView.Adapter<MovieMostPopularAdapter.ViewHolder>() {
+class MovieMostPopularAdapter() :
+    PagedListAdapter<Movie, MovieMostPopularAdapter.ViewHolder>(Movie.CALLBACK) {
+
     private var listener: OnItemClickListener? = null
 
     constructor(listener: OnItemClickListener?) : this() {
@@ -38,10 +40,10 @@ class MovieMostPopularAdapter(var items: List<Movie> = ArrayList()) :
         )
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) =
-        holder.bind(items[position])
-
-    override fun getItemCount() = items.size
+    override fun onBindViewHolder(holder: ViewHolder, position: Int)  {
+        val movie = getItem(position)
+        movie?.let { holder.bind(it) }
+    }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private lateinit var poster: ImageView
@@ -52,7 +54,6 @@ class MovieMostPopularAdapter(var items: List<Movie> = ArrayList()) :
         fun bind(item: Movie) = with(itemView) {
             poster = itemView.findViewById(R.id.poster)
 
-            // Load the image into image view
             Glide.with(context)
                 .load("${NetworkApiConfig.imageUrl}${item.posterPath}")
                 .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))

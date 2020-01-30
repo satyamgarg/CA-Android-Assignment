@@ -1,35 +1,48 @@
 package com.backbase.assignment.ui.viewmodel
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.backbase.assignment.data.ApiClient
+import com.backbase.assignment.data.MovieDataSourceFactory
 import com.backbase.assignment.data.MovieRepository
-import com.backbase.assignment.data.model.MoviePlayingNowResponse
+import com.backbase.assignment.model.Movie
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
 class MovieBoxViewModel(private val repository: MovieRepository) : ViewModel() {
-    fun getMovies() = repository.getMovies()
-    fun getPopularMovies() = repository.getPopularMovies()
 
+    var executor: Executor
+    var moviesPageList: LiveData<PagedList<Movie>>
 
-    /*var postsLiveData  : LiveData<PagedList<MoviePlayingNowResponse>>
     init {
-        val config = PagedList.Config.Builder()
-            .setPageSize(30)
-            .setEnablePlaceholders(false)
+        val movieDataService = ApiClient.getService()
+        val movieDataSourceFactory = MovieDataSourceFactory(movieDataService)
+        var movieDataSourceLiveData = movieDataSourceFactory.getMutableLiveData()
+        val config: PagedList.Config = PagedList.Config.Builder()
+            .setEnablePlaceholders(true)
+            .setInitialLoadSizeHint(10)
+            .setPageSize(15)
+            .setPrefetchDistance(4)
             .build()
-        postsLiveData  = initializedPagedListBuilder(config).build()
+        executor = Executors.newFixedThreadPool(5)
+        moviesPageList = LivePagedListBuilder<Long, Movie>(movieDataSourceFactory, config)
+            .setFetchExecutor(executor)
+            .build()
     }
-    private fun initializedPagedListBuilder(config: PagedList.Config):
-            LivePagedListBuilder<String, MoviePlayingNowResponse> {
 
-        val dataSourceFactory = object : DataSource.Factory<String, MoviePlayingNowResponse>() {
-            override fun create(): DataSource<String, MoviePlayingNowResponse> {
-                return MovieRepository(viewModelScope)
-            }
-        }
-        return LivePagedListBuilder<String, MoviePlayingNowResponse>(dataSourceFactory, config)
-    }*/
+    /**
+     * Get playing now movie list
+     * @return List of movies
+     */
+    fun getPlayingNowMovies() = repository.getPlayingNowMovies()
+
+    /**
+     * Get Popular movie list
+     * @return List of movies
+     */
+    fun getPopularMovies(): LiveData<PagedList<Movie>> = moviesPageList
+
 }

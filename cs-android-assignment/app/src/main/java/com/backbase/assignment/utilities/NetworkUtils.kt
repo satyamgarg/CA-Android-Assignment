@@ -8,6 +8,10 @@ import android.os.Build
 class NetworkUtils {
 
     companion object {
+        /**
+         * Check weather network is available ot not
+         * @param context - Context
+         */
         fun isOnline(context: Context): Boolean {
             val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
@@ -15,7 +19,6 @@ class NetworkUtils {
                 val n = cm.activeNetwork
                 if (n != null) {
                     val nc = cm.getNetworkCapabilities(n)
-                    //It will check for both wifi and cellular network
                     return nc!!.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) || nc.hasTransport(
                         NetworkCapabilities.TRANSPORT_WIFI
                     )

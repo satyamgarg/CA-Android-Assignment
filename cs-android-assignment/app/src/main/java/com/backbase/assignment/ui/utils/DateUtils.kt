@@ -9,6 +9,7 @@ object DateUtils {
 
     const val RELEASE_DATE_FORMAT = "MMMM d, yyyy"
     const val API_DATE_FORMAT = "YY-MM-DD"
+
     /**
      * Format String Date to String date different format
      *

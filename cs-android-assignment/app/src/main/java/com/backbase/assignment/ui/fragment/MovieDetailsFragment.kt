@@ -43,6 +43,9 @@ class MovieDetailsFragment : Fragment() {
     private lateinit var tvOverviewHeading: TextView
     private lateinit var progressBar: ProgressBar
 
+    /**
+     * Initializing UI on onCreate
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -68,10 +71,13 @@ class MovieDetailsFragment : Fragment() {
         val factory = RepositoryUtils.provideMovieDetailsViewModelFactory()
         viewModel = ViewModelProvider(this, factory).get(MovieDetailsViewModel::class.java)
 
-        setObservable(movieId)
+        setObserver(movieId)
     }
 
-    private fun setObservable(movieId: String?) {
+    /**
+     * Setting observer
+     */
+    private fun setObserver(movieId: String?) {
 
         progressBar.visibility = VISIBLE
         movieId?.let { it ->
@@ -82,6 +88,9 @@ class MovieDetailsFragment : Fragment() {
         }
     }
 
+    /**
+     * Populating UI of movie details
+     */
     private fun setUIData(movie: MovieDetailResponse) {
 
         if (context?.let { NetworkUtils.isOnline(it) }!!) {

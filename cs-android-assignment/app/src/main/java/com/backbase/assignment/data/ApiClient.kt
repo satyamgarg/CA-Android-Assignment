@@ -10,6 +10,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
 
+    /**
+     * Configure Retrofit
+     */
     private fun getRetrofitClient(): Retrofit {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
@@ -19,12 +22,18 @@ object ApiClient {
             .build()
     }
 
+    /**
+     * Configure OkHttpClient
+     */
     private fun getOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(getLoggingInterceptor())
             .build()
     }
 
+    /**
+     * Configure Logging Interceptor only for debug mode
+     */
     private fun getLoggingInterceptor(): HttpLoggingInterceptor {
         val interceptor = HttpLoggingInterceptor()
         if (BuildConfig.DEBUG) {
@@ -35,7 +44,10 @@ object ApiClient {
         return interceptor
     }
 
-    fun getService(networkApi: Class<MoviesNetworkApi>): MoviesNetworkApi {
-        return getRetrofitClient().create(networkApi)
+    /**
+     * Create MovieDataService
+     */
+    fun getService(): MoviesDataService {
+        return getRetrofitClient().create(MoviesDataService::class.java)
     }
 }

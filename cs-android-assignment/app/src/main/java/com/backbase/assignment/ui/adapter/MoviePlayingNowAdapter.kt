@@ -35,11 +35,8 @@ class MoviePlayingNowAdapter(var items: List<Movie> = ArrayList()) :
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private lateinit var poster: ImageView
 
-
         fun bind(item: Movie) = with(itemView) {
             poster = itemView.findViewById(R.id.poster)
-
-            // Load the image into image view
             Glide.with(context)
                 .load("${NetworkApiConfig.imageUrl}${item.posterPath}")
                 .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
@@ -48,6 +45,5 @@ class MoviePlayingNowAdapter(var items: List<Movie> = ArrayList()) :
             itemView.setOnClickListener {}
         }
     }
-
 
 }

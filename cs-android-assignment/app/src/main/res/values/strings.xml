@@ -9,4 +9,5 @@
     <string name="DESC_POSTER">Poster Image</string>
     <string name="DESC_LOGO_IMAGE">Logo Image</string>
     <string name="MESSAGE_NETWORK_ERROR">Please enable network page and revisit.</string>
+    <string name="TEXT_PERCENTAGE">%</string>
 </resources>

@@ -1,9 +1,10 @@
 package com.backbase.assignment.model
 
+import androidx.recyclerview.widget.DiffUtil
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class Movie {
+open class Movie {
     @SerializedName("popularity")
     @Expose
     var popularity: Double? = null
@@ -46,4 +47,18 @@ class Movie {
     @SerializedName("release_date")
     @Expose
     var releaseDate: String? = null
+
+    companion object {
+
+        public val CALLBACK: DiffUtil.ItemCallback<Movie> = object : DiffUtil.ItemCallback<Movie>() {
+            override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+                return true
+            }
+        }
+    }
+
 }
