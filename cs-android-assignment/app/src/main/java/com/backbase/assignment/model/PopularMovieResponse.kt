@@ -1,8 +1,7 @@
-package com.backbase.assignment.data.model
+package com.backbase.assignment.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.backbase.assignment.model.Movie
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 

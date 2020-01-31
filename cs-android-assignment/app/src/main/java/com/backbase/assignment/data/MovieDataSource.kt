@@ -2,7 +2,7 @@ package com.backbase.assignment.data
 
 import androidx.annotation.NonNull
 import androidx.paging.PageKeyedDataSource
-import com.backbase.assignment.data.model.PopularMovieResponse
+import com.backbase.assignment.model.PopularMovieResponse
 import com.backbase.assignment.model.Movie
 import com.backbase.assignment.service.NetworkApiConfig.apiKey
 import com.backbase.assignment.service.RetrofitInstance
@@ -13,7 +13,8 @@ import retrofit2.Response
 
 class MovieDataSource : PageKeyedDataSource<Long?, Movie?>() {
 
-    private var popularMovieResponse = PopularMovieResponse()
+    private var popularMovieResponse =
+        PopularMovieResponse()
     override fun loadInitial(
         @NonNull params: LoadInitialParams<Long?>,
         @NonNull callback: LoadInitialCallback<Long?, Movie?>

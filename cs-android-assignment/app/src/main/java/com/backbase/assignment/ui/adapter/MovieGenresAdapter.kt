@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.backbase.assignment.R
-import com.backbase.assignment.data.model.Genres
+import com.backbase.assignment.model.Genres
 
 class MovieGenresAdapter(var items: List<Genres> = ArrayList()) :
     RecyclerView.Adapter<MovieGenresAdapter.ViewHolder>() {

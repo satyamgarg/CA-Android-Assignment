@@ -1,4 +1,4 @@
-package com.backbase.assignment.data.model;
+package com.backbase.assignment.model;
 
 public class Genres {
     private int id;

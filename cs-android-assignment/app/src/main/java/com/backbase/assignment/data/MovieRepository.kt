@@ -2,8 +2,8 @@ package com.backbase.assignment.data
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.backbase.assignment.data.model.MovieDetailResponse
-import com.backbase.assignment.data.model.MoviePlayingNowResponse
+import com.backbase.assignment.model.MovieDetailResponse
+import com.backbase.assignment.model.MoviePlayingNowResponse
 import com.backbase.assignment.service.NetworkApiConfig
 import com.backbase.assignment.service.RetrofitInstance
 import retrofit2.Call
@@ -13,10 +13,12 @@ import retrofit2.Response
 class MovieRepository {
 
     private val TAG = MovieRepository::class.java.simpleName
-    private var movieResponse = MoviePlayingNowResponse()
+    private var movieResponse =
+        MoviePlayingNowResponse()
     private val movieResponseLiveData = MutableLiveData<MoviePlayingNowResponse>()
 
-    private var movieDetailResponse = MovieDetailResponse()
+    private var movieDetailResponse =
+        MovieDetailResponse()
     private val movieDetailResponseLiveData = MutableLiveData<MovieDetailResponse>()
 
 

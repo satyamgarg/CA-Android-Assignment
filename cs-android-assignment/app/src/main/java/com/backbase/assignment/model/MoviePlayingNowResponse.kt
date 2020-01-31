@@ -1,5 +1,6 @@
-package com.backbase.assignment.data.model
+package com.backbase.assignment.model
 
+import com.backbase.assignment.model.Dates
 import com.backbase.assignment.model.Movie
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

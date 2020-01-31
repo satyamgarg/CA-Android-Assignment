@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.backbase.assignment.R
 import com.backbase.assignment.service.NetworkApiConfig
-import com.backbase.assignment.data.model.MovieDetailResponse
+import com.backbase.assignment.model.MovieDetailResponse
 import com.backbase.assignment.ui.adapter.MovieGenresAdapter
 import com.backbase.assignment.ui.utils.DateUtils
 import com.backbase.assignment.ui.utils.DividerItemDecorator

@@ -1,4 +1,4 @@
-package com.backbase.assignment.data.model
+package com.backbase.assignment.model
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
