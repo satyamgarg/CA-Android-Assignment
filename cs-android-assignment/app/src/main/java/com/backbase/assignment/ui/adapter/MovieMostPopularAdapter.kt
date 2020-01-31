@@ -58,7 +58,7 @@ class MovieMostPopularAdapter() :
                 .load("${NetworkApiConfig.imageUrl}${item.posterPath}")
                 .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
                 .placeholder(R.drawable.loading)
-                .diskCacheStrategy(DiskCacheStrategy.ALL))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(DrawableImageViewTarget(poster))
 
             title = itemView.findViewById(R.id.title)
