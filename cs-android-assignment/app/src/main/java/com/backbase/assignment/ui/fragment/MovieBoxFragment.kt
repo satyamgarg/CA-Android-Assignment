@@ -22,7 +22,6 @@ import com.backbase.assignment.ui.adapter.MovieMostPopularAdapter
 import com.backbase.assignment.ui.adapter.MoviePlayingNowAdapter
 import com.backbase.assignment.ui.utils.DividerItemDecorator
 import com.backbase.assignment.ui.viewmodel.MovieBoxViewModel
-import com.backbase.assignment.utilities.RepositoryUtils
 
 
 class MovieBoxFragment : Fragment() {
@@ -59,7 +58,7 @@ class MovieBoxFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val factory = RepositoryUtils.provideMovieBoxViewModelFactory()
+        val factory = FactoryProvider.provideMovieBoxViewModelFactory()
         viewModel = ViewModelProvider(this, factory).get(MovieBoxViewModel::class.java)
 
         setObservers()
@@ -105,6 +104,7 @@ class MovieBoxFragment : Fragment() {
         recyclerViewMostPopulat?.addItemDecoration(dividerItemDecoration)
 
         recyclerViewMostPopulat?.adapter = moviesAdapter
+        moviesAdapter.notifyDataSetChanged()
 
     }
 

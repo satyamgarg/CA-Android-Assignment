@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.backbase.assignment.R
-import com.backbase.assignment.data.NetworkApiConfig
+import com.backbase.assignment.service.NetworkApiConfig
 import com.backbase.assignment.model.Movie
 import com.backbase.assignment.ui.custom.RatingView
 import com.backbase.assignment.ui.utils.DateUtils
@@ -57,6 +57,8 @@ class MovieMostPopularAdapter() :
             Glide.with(context)
                 .load("${NetworkApiConfig.imageUrl}${item.posterPath}")
                 .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
+                .placeholder(R.drawable.loading)
+                .diskCacheStrategy(DiskCacheStrategy.ALL))
                 .into(DrawableImageViewTarget(poster))
 
             title = itemView.findViewById(R.id.title)

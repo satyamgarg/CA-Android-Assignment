@@ -1,26 +1,27 @@
-package com.backbase.assignment.data
+package com.backbase.assignment.service
 
 import com.backbase.assignment.BuildConfig
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.backbase.assignment.data.MoviesDataService
+import com.backbase.assignment.service.NetworkApiConfig.baseUrl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+object RetrofitInstance {
+    private var retrofit: Retrofit? = null
 
-object ApiClient {
-
-    /**
-     * Configure Retrofit
-     */
-    private fun getRetrofitClient(): Retrofit {
-        return Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(NetworkApiConfig.baseUrl)
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .client(getOkHttpClient())
-            .build()
-    }
+    val service: MoviesDataService
+        get() {
+            if (retrofit == null) {
+                retrofit = Retrofit.Builder()
+                    .baseUrl(baseUrl)
+                    .client(getOkHttpClient())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+            }
+            return retrofit!!.create(MoviesDataService::class.java)
+        }
 
     /**
      * Configure OkHttpClient
@@ -44,10 +45,4 @@ object ApiClient {
         return interceptor
     }
 
-    /**
-     * Create MovieDataService
-     */
-    fun getService(): MoviesDataService {
-        return getRetrofitClient().create(MoviesDataService::class.java)
-    }
 }

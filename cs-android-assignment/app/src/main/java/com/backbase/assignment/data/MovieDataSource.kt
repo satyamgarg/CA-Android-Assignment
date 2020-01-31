@@ -1,36 +1,36 @@
 package com.backbase.assignment.data
 
+import androidx.annotation.NonNull
 import androidx.paging.PageKeyedDataSource
-import com.backbase.assignment.data.ApiClient.getService
-import com.backbase.assignment.data.NetworkApiConfig.apiKey
 import com.backbase.assignment.data.model.PopularMovieResponse
 import com.backbase.assignment.model.Movie
+import com.backbase.assignment.service.NetworkApiConfig.apiKey
+import com.backbase.assignment.service.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 
-class MovieDataSource() : PageKeyedDataSource<Long?, Movie?>() {
+
+class MovieDataSource : PageKeyedDataSource<Long?, Movie?>() {
 
     private var popularMovieResponse = PopularMovieResponse()
-
     override fun loadInitial(
-        params: LoadInitialParams<Long?>,
-        callback: LoadInitialCallback<Long?, Movie?>
+        @NonNull params: LoadInitialParams<Long?>,
+        @NonNull callback: LoadInitialCallback<Long?, Movie?>
     ) {
         val call =
-            getService().getPopularMoviesWithPagging(apiKey, 1)
+            RetrofitInstance.service.getPopularMoviesWithPaging(apiKey, 1)
         call.enqueue(object : Callback<PopularMovieResponse?> {
             override fun onResponse(
                 call: Call<PopularMovieResponse?>,
                 response: Response<PopularMovieResponse?>
             ) {
-                var moviesList: List<Movie> = ArrayList()
+                val moviesList: ArrayList<Movie>
                 if (response.code() == 200) {
                     popularMovieResponse = response.body() ?: popularMovieResponse
-                    moviesList = popularMovieResponse.results ?: moviesList
+                    moviesList = popularMovieResponse.results as ArrayList<Movie>
                     if (moviesList.isNotEmpty()) {
-                        callback.onResult(moviesList, null, 2)
+                        callback.onResult(moviesList as List<Movie?>, null, 2)
                     }
                 }
             }
@@ -44,41 +44,40 @@ class MovieDataSource() : PageKeyedDataSource<Long?, Movie?>() {
     }
 
     override fun loadBefore(
-        params: LoadParams<Long?>,
-        callback: LoadCallback<Long?, Movie?>
+        @NonNull  params: LoadParams<Long?>,
+        @NonNull  callback: LoadCallback<Long?, Movie?>
     ) {
     }
 
     override fun loadAfter(
-        params: LoadParams<Long?>,
-        callback: LoadCallback<Long?, Movie?>
+        @NonNull params: LoadParams<Long?>,
+        @NonNull callback: LoadCallback<Long?, Movie?>
     ) {
 
-        val call =
-            params.key?.let { getService().getPopularMoviesWithPagging(apiKey, it) }
-        call?.enqueue(object : Callback<PopularMovieResponse?> {
-            override fun onResponse(
-                call: Call<PopularMovieResponse?>,
-                response: Response<PopularMovieResponse?>
-            ) {
-                var moviesList: List<Movie> =
-                    ArrayList<Movie>()
-                if (response.code() == 200) {
-                    popularMovieResponse = response.body() ?: popularMovieResponse
-                    moviesList = popularMovieResponse.results ?: moviesList
+            val call =
+                params.key?.let { RetrofitInstance.service.getPopularMoviesWithPaging(apiKey, it) }
+            call?.enqueue(object : Callback<PopularMovieResponse?> {
+                override fun onResponse(
+                    call: Call<PopularMovieResponse?>,
+                    response: Response<PopularMovieResponse?>
+                ) {
+                    val moviesList: ArrayList<Movie>
+                    if (response.code() == 200) {
+                        popularMovieResponse = response.body() ?: popularMovieResponse
+                        moviesList = popularMovieResponse.results as ArrayList<Movie>
 
-                    if (moviesList.isNotEmpty()) {
-                        callback.onResult(moviesList, params.key?.plus(1))
+                        if (moviesList.isNotEmpty()) {
+                            callback.onResult(moviesList as List<Movie?>, params.key!! + 1)
+                        }
                     }
                 }
-            }
 
-            override fun onFailure(
-                call: Call<PopularMovieResponse?>,
-                t: Throwable
-            ) {
-            }
-        })
+                override fun onFailure(
+                    call: Call<PopularMovieResponse?>,
+                    t: Throwable
+                ) {
+                }
+            })
+
     }
-
 }

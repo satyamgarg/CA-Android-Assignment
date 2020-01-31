@@ -1,4 +1,4 @@
-package com.backbase.assignment.utilities
+package com.backbase.assignment.service
 
 import android.content.Context
 import android.net.ConnectivityManager

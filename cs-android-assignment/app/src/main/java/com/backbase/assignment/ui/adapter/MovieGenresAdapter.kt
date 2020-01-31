@@ -30,7 +30,7 @@ class MovieGenresAdapter(var items: List<Genres> = ArrayList()) :
         private lateinit var genres: TextView
 
         fun bind(item: Genres) = with(itemView) {
-            genres = itemView.findViewById(R.id.genres)
+            genres = itemView.findViewById(R.id.tvGenres)
             genres.text = item.name
             itemView.setOnClickListener {}
         }

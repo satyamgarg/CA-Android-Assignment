@@ -1,11 +1,10 @@
 package com.backbase.assignment.ui.viewmodel
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.backbase.assignment.data.ApiClient
+import com.backbase.assignment.data.MovieDataSource
 import com.backbase.assignment.data.MovieDataSourceFactory
 import com.backbase.assignment.data.MovieRepository
 import com.backbase.assignment.model.Movie
@@ -16,16 +15,18 @@ class MovieBoxViewModel(private val repository: MovieRepository) : ViewModel() {
 
     var executor: Executor
     var moviesPageList: LiveData<PagedList<Movie>>
+    var movieDataSourceLiveData: LiveData<MovieDataSource>? = null
 
     init {
         val movieDataSourceFactory = MovieDataSourceFactory()
+        movieDataSourceLiveData = movieDataSourceFactory.getMutableLiveData()
         val config: PagedList.Config = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
-            .setInitialLoadSizeHint(10)
+            .setInitialLoadSizeHint(15)
             .setPageSize(15)
             .setPrefetchDistance(2)
             .build()
-        executor = Executors.newFixedThreadPool(3)
+        executor = Executors.newFixedThreadPool(5)
         moviesPageList = LivePagedListBuilder<Long, Movie>(movieDataSourceFactory, config)
             .setFetchExecutor(executor)
             .build()

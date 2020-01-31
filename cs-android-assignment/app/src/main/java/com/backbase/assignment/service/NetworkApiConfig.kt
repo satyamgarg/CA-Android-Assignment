@@ -1,4 +1,4 @@
-package com.backbase.assignment.data
+package com.backbase.assignment.service
 
 object NetworkApiConfig{
      /**

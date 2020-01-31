@@ -1,9 +1,7 @@
 package com.backbase.assignment.data
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
-
 import com.backbase.assignment.model.Movie
 
 class MovieDataSourceFactory() : DataSource.Factory<Long, Movie?>() {
@@ -16,6 +14,10 @@ class MovieDataSourceFactory() : DataSource.Factory<Long, Movie?>() {
         val movieDataSource = MovieDataSource()
         mutableLiveData.postValue(movieDataSource)
         return movieDataSource
+    }
+
+    fun getMutableLiveData(): MutableLiveData<MovieDataSource> {
+        return mutableLiveData
     }
 
 }

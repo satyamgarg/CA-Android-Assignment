@@ -17,14 +17,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.backbase.assignment.R
-import com.backbase.assignment.data.NetworkApiConfig
+import com.backbase.assignment.service.NetworkApiConfig
 import com.backbase.assignment.data.model.MovieDetailResponse
 import com.backbase.assignment.ui.adapter.MovieGenresAdapter
 import com.backbase.assignment.ui.utils.DateUtils
 import com.backbase.assignment.ui.utils.DividerItemDecorator
 import com.backbase.assignment.ui.viewmodel.MovieDetailsViewModel
-import com.backbase.assignment.utilities.NetworkUtils
-import com.backbase.assignment.utilities.RepositoryUtils
+import com.backbase.assignment.service.NetworkUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -68,7 +67,7 @@ class MovieDetailsFragment : Fragment() {
 
         val args = arguments?.let { MovieDetailsFragmentArgs.fromBundle(it) }
         val movieId = args?.movieId
-        val factory = RepositoryUtils.provideMovieDetailsViewModelFactory()
+        val factory = FactoryProvider.provideMovieDetailsViewModelFactory()
         viewModel = ViewModelProvider(this, factory).get(MovieDetailsViewModel::class.java)
 
         setObserver(movieId)
@@ -96,8 +95,11 @@ class MovieDetailsFragment : Fragment() {
         if (context?.let { NetworkUtils.isOnline(it) }!!) {
             progressBar.visibility = GONE
             context?.let {
-                Glide.with(it).load("${NetworkApiConfig.imageUrl}${movie.poster_path}")
-                    .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.NONE))
+                Glide.with(it)
+                    .load("${NetworkApiConfig.imageUrl}${movie.poster_path}")
+                    .apply(RequestOptions()
+                        .placeholder(R.drawable.loading)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL))
                     .into(DrawableImageViewTarget(poster))
             }
 

@@ -4,7 +4,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.backbase.assignment.data.model.MovieDetailResponse
 import com.backbase.assignment.data.model.MoviePlayingNowResponse
-import com.backbase.assignment.data.model.PopularMovieResponse
+import com.backbase.assignment.service.NetworkApiConfig
+import com.backbase.assignment.service.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,7 +36,7 @@ class MovieRepository {
      * @return MutableLiveData<MoviePlayingNowResponse>
      */
     fun getPlayingNowMovies(): MutableLiveData<MoviePlayingNowResponse> {
-        val request = ApiClient.getService().getMovies(
+        val request = RetrofitInstance.service.getMoviePlayingNow(
             NetworkApiConfig.language,
             NetworkApiConfig.page, NetworkApiConfig.apiKey
         )
@@ -66,7 +67,7 @@ class MovieRepository {
      * @return MutableLiveData<MovieDetailResponse>
      */
     fun getMovieDetails(movieId: String): MutableLiveData<MovieDetailResponse> {
-        val request = ApiClient.getService().getMovieDetails(
+        val request = RetrofitInstance.service.getMovieDetails(
             movieId, NetworkApiConfig.apiKey
         )
 

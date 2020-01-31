@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.backbase.assignment.R
-import com.backbase.assignment.data.NetworkApiConfig
+import com.backbase.assignment.service.NetworkApiConfig
 import com.backbase.assignment.model.Movie
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -39,7 +39,9 @@ class MoviePlayingNowAdapter(var items: List<Movie> = ArrayList()) :
             poster = itemView.findViewById(R.id.poster)
             Glide.with(context)
                 .load("${NetworkApiConfig.imageUrl}${item.posterPath}")
-                .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.AUTOMATIC))
+                .placeholder(R.drawable.loading)
+                .apply(RequestOptions()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL))
                 .into(DrawableImageViewTarget(poster))
 
             itemView.setOnClickListener {}

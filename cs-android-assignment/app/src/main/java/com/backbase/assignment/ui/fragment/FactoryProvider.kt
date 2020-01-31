@@ -1,10 +1,10 @@
-package com.backbase.assignment.utilities
+package com.backbase.assignment.ui.fragment
 
 import com.backbase.assignment.data.MovieRepository
 import com.backbase.assignment.ui.viewmodel.MovieDetailsViewModelFactory
 import com.backbase.assignment.ui.viewmodel.MovieViewModelFactory
 
-object RepositoryUtils {
+object FactoryProvider {
 
     /**
      * Factory method to provide instance of MovieViewModelFactory
